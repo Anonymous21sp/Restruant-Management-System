@@ -1,9 +1,23 @@
 If you have GCC installed:
 gcc src/main.c -o restaurant
 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-On Windows:
-restaurant.exe
+On Windows, run restaurant.exe.
+
+## How to Run
+
+1. Clone this repository.
+2. Open the project folder.
+3. Compile the source code:
+
+   gcc src/main.c -o restaurant
+
+4. Run the program:
+
+   ./restaurant
+
+   On Windows, run restaurant.exe.
 
 
 On Linux/macOS:
