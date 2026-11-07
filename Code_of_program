@@ -1,0 +1,231 @@
+
+#include <stdio.h>
+
+// Function declarations
+void displayMenu();
+void placeOrder();
+void viewOrder();
+void generateBill();
+
+// Food item names and prices
+char *foodItems[] = {
+    "Veg Burger",
+    "Pizza",
+    "Sandwich",
+    "French Fries",
+    "Pasta",
+    "Veg Noodles",
+    "Cold Coffee",
+    "Coke",
+    "Ice Cream",
+    "Tea"
+};
+
+int prices[] = {80, 150, 60, 70, 120, 100, 80, 40, 50, 20};
+
+// Array to store ordered quantities
+int quantity[10] = {0};
+
+// Main function
+int main()
+{
+    int choice;
+
+    printf("\n====================================");
+    printf("\n       WELCOME TO FOOD CORNER");
+    printf("\n====================================");
+
+    do
+    {
+        printf("\n\n----------- MAIN MENU -----------");
+        printf("\n1. Display Food Menu");
+        printf("\n2. Place Order");
+        printf("\n3. View Current Order");
+        printf("\n4. Generate Bill");
+        printf("\n5. Exit");
+        printf("\n---------------------------------");
+
+        printf("\nEnter your choice: ");
+        scanf("%d", &choice);
+
+        switch(choice)
+        {
+            case 1:
+                displayMenu();
+                break;
+
+            case 2:
+                placeOrder();
+                break;
+
+            case 3:
+                viewOrder();
+                break;
+
+            case 4:
+                generateBill();
+                break;
+
+            case 5:
+                printf("\nThank you for visiting Food Corner!");
+                printf("\nHave a nice day!\n");
+                break;
+
+            default:
+                printf("\nInvalid choice! Please try again.");
+        }
+
+    } while(choice != 5);
+
+    return 0;
+}
+
+// Function to display food menu
+void displayMenu()
+{
+    int i;
+
+    printf("\n\n========== FOOD MENU ==========");
+    printf("\nNo.       Food Item       Price");
+    printf("\n--------------------------------");
+
+    for(i = 0; i < 10; i++)
+    {
+        printf("\n%d.        %-16s Rs.%d",
+               i + 1, foodItems[i], prices[i]);
+    }
+
+    printf("\n================================");
+}
+
+// Function to place an order
+void placeOrder()
+{
+    int item, qty;
+    char more;
+
+    displayMenu();
+
+    do
+    {
+        printf("\n\nEnter food item number (1-10): ");
+        scanf("%d", &item);
+
+        if(item >= 1 && item <= 10)
+        {
+            printf("Enter quantity: ");
+            scanf("%d", &qty);
+
+            if(qty > 0)
+            {
+                quantity[item - 1] += qty;
+
+                printf("\n%d x %s added to your order.",
+                       qty, foodItems[item - 1]);
+            }
+            else
+            {
+                printf("\nInvalid quantity!");
+            }
+        }
+        else
+        {
+            printf("\nInvalid food item number!");
+        }
+
+        printf("\nDo you want to order more? (y/n): ");
+        scanf(" %c", &more);
+
+    } while(more == 'y' || more == 'Y');
+}
+
+// Function to view current order
+void viewOrder()
+{
+    int i, found = 0;
+    int total = 0;
+
+    printf("\n\n========== YOUR ORDER ==========");
+
+    printf("\nFood Item\tQty\tPrice");
+    printf("\n--------------------------------");
+
+    for(i = 0; i < 10; i++)
+    {
+        if(quantity[i] > 0)
+        {
+            printf("\n%-16s %d\tRs.%d",
+                   foodItems[i],
+                   quantity[i],
+                   quantity[i] * prices[i]);
+
+            total = total + (quantity[i] * prices[i]);
+            found = 1;
+        }
+    }
+
+    if(found == 0)
+    {
+        printf("\nNo items ordered yet!");
+    }
+    else
+    {
+        printf("\n--------------------------------");
+        printf("\nSubtotal: Rs.%d", total);
+    }
+
+    printf("\n================================");
+}
+
+// Function to generate final bill
+void generateBill()
+{
+    int i, total = 0;
+    int gst;
+    int grandTotal;
+    int found = 0;
+
+    printf("\n\n========== FINAL BILL ==========");
+
+    printf("\nFood Item\tQty\tAmount");
+    printf("\n--------------------------------");
+
+    for(i = 0; i < 10; i++)
+    {
+        if(quantity[i] > 0)
+        {
+            printf("\n%-16s %d\tRs.%d",
+                   foodItems[i],
+                   quantity[i],
+                   quantity[i] * prices[i]);
+
+            total = total + (quantity[i] * prices[i]);
+            found = 1;
+        }
+    }
+
+    if(found == 0)
+    {
+        printf("\nNo order placed!");
+    }
+    else
+    {
+        gst = total * 5 / 100;
+        grandTotal = total + gst;
+
+        printf("\n--------------------------------");
+        printf("\nSubtotal       : Rs.%d", total);
+        printf("\nGST (5%%)       : Rs.%d", gst);
+        printf("\n--------------------------------");
+        printf("\nGrand Total    : Rs.%d", grandTotal);
+        printf("\n================================");
+        printf("\n       THANK YOU! VISIT AGAIN");
+        printf("\n================================");
+
+        // Clear order after billing
+        for(i = 0; i < 10; i++)
+        {
+            quantity[i] = 0;
+        }
+    }
+}
