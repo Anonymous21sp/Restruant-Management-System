@@ -1,0 +1,10 @@
+If you have GCC installed:
+gcc src/main.c -o restaurant
+
+
+On Windows:
+restaurant.exe
+
+
+On Linux/macOS:
+./restaurant
